@@ -27,6 +27,19 @@ def concluir_tarefa(id: int):
             return tarefa
     return {"erro": "n encontrada"}
 
+@router.put("/tarefas/{id}/editar")
+def editar_tarefa(id: int, titulo: str = None, materia: str = None, prazo: str = None):
+    for tarefa in tarefas:
+        if tarefa["id"] == id:
+            if titulo is not None:
+                tarefa["titulo"] = titulo
+            if materia is not None:
+                tarefa["materia"] = materia
+            if prazo is not None:
+                tarefa["prazo"] = prazo
+            return tarefa
+    return {"erro": "n encontrada"}
+
 @router.delete("/tarefas/{id}")
 def deletar_tarefa(id: int):
     for tarefa in tarefas:
