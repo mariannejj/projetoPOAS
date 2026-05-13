@@ -9,7 +9,11 @@ function mostrarTarefas(tarefas) {
 
   for (let i = 0; i < tarefas.length; i++) {
     const item = document.createElement("li");
-    item.innerText = tarefas[i].titulo;
+    item.innerHTML =
+      tarefas[i].titulo +
+      ' <button onclick="excluirTarefa(' +
+      tarefas[i].id +
+      ')">Excluir</button>';
     lista.appendChild(item);
   }
 }
@@ -45,5 +49,18 @@ form.addEventListener("submit", function (e) {
     form.reset(); // limpa form
   });
 });
+
+// exclui a tarefa
+function excluirTarefa(id) {
+
+  fetch(url + "/" + id, {
+    method: "DELETE"
+  })
+
+  .then(() => {
+    carregarTarefas(); // atualiza lista
+  });
+
+}
 
 carregarTarefas();
