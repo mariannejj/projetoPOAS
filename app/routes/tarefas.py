@@ -1,9 +1,26 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Header
 from pydantic import BaseModel
 from typing import Optional
+from jose import jwt
+
+SECRET_KEY = "estudamais"
 
 router = APIRouter()
 tarefas = []
+
+def verificar_token(token: str):
+
+    try:
+        jwt.decode(
+            token,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        return True
+
+    except:
+        return False
+
 
 class Tarefa(BaseModel):
     titulo: str
@@ -16,8 +33,16 @@ class EditarTarefa(BaseModel):
     materia: Optional[str] = None
     prazo: Optional[str] = None
 
+
 @router.post("/tarefas")
-def criar_tarefa(tarefa: Tarefa):
+def criar_tarefa(
+    tarefa: Tarefa,
+    authorization: str = Header()
+):
+
+    if not verificar_token(authorization):
+        return {"erro": "acesso negado"}
+
     nova_tarefa = {
         "id": len(tarefas) + 1,
         "titulo": tarefa.titulo,
@@ -30,12 +55,26 @@ def criar_tarefa(tarefa: Tarefa):
 
     return nova_tarefa
 
+
 @router.get("/tarefas")
-def listar_tarefas():
+def listar_tarefas(
+    authorization: str = Header()
+):
+
+    if not verificar_token(authorization):
+        return {"erro": "acesso negado"}
+
     return tarefas
 
+
 @router.put("/tarefas/{id}")
-def concluir_tarefa(id: int):
+def concluir_tarefa(
+    id: int,
+    authorization: str = Header()
+):
+
+    if not verificar_token(authorization):
+        return {"erro": "acesso negado"}
 
     for tarefa in tarefas:
 
@@ -45,8 +84,16 @@ def concluir_tarefa(id: int):
 
     return {"erro": "não encontrada"}
 
+
 @router.put("/tarefas/{id}/editar")
-def editar_tarefa(id: int, dados: EditarTarefa):
+def editar_tarefa(
+    id: int,
+    dados: EditarTarefa,
+    authorization: str = Header()
+):
+
+    if not verificar_token(authorization):
+        return {"erro": "acesso negado"}
 
     for tarefa in tarefas:
 
@@ -65,8 +112,15 @@ def editar_tarefa(id: int, dados: EditarTarefa):
 
     return {"erro": "não encontrada"}
 
+
 @router.delete("/tarefas/{id}")
-def deletar_tarefa(id: int):
+def deletar_tarefa(
+    id: int,
+    authorization: str = Header()
+):
+
+    if not verificar_token(authorization):
+        return {"erro": "acesso negado"}
 
     for tarefa in tarefas:
 
