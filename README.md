@@ -121,6 +121,10 @@ E- Cronograma Inicial do Projeto divido por Bimestre
         -- organização do sistema;
         -- atualização do GitHub
 
+        Requisitos relacionados:
+        -- revisão dos RF01, RF02, RF04 e RF05
+
+
 
     /// 3º Bimestre— 10/08 a 13/10 ///
 
