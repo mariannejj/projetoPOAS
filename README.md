@@ -47,6 +47,8 @@ E- Cronograma Inicial do Projeto divido por Bimestre
         -- criação da estrutura para cadastro das tarefas;
         -- definição do banco de dados
 
+        Requisitos relacionados:
+        -- RF01: Criar tarefas
 
     -> Entrega 4 — 07/05
         Cadastro funcionando
@@ -57,6 +59,9 @@ E- Cronograma Inicial do Projeto divido por Bimestre
         Backend
 
         -- implementação da rota para cadastrar tarefas
+
+        Requisitos relacionados:
+        -- RF01: Criar tarefas
 
 
     -> Entrega 5 — 18/05
@@ -78,6 +83,9 @@ E- Cronograma Inicial do Projeto divido por Bimestre
 
         -- rota para listar tarefas
 
+        Requisitos relacionados:
+        -- RF02: Listar tarefas
+
 
     -> Entrega 7 — 18/06
         Exclusão de tarefas
@@ -89,6 +97,9 @@ E- Cronograma Inicial do Projeto divido por Bimestre
 
         -- rota para remover tarefa
 
+        Requisitos relacionados:
+        -- RF04: Remover tarefas
+
 
     -> Entrega 8 — 02/07
         Edição de tarefas
@@ -99,6 +110,9 @@ E- Cronograma Inicial do Projeto divido por Bimestre
         Backend
 
         -- rota para editar tarefa
+
+        Requisitos relacionados:
+        -- RF05: Editar tarefas
 
 
     -> Entrega 9 — 20/07
@@ -120,6 +134,8 @@ E- Cronograma Inicial do Projeto divido por Bimestre
 
         -- atualização de status da tarefa
 
+        Requisitos relacionados:
+        -- RF03: Concluir tarefas
 
     -> Entrega 11 — 07/09
         Filtro por matéria
@@ -131,6 +147,8 @@ E- Cronograma Inicial do Projeto divido por Bimestre
 
         -- filtro na listagem das tarefas
 
+        Requisitos relacionados:
+        -- RF06: Filtrar tarefas por matéria
 
     -> Entrega 12 — 21/09
         Melhorias visuais
@@ -138,6 +156,8 @@ E- Cronograma Inicial do Projeto divido por Bimestre
 
         -- melhoria no layout e na organização da tela
 
+        Requisitos relacionados:
+        -- RNF03: Facilidade de uso
 
     -> Entrega 13 — 05/10
         Testes e correções
@@ -145,6 +165,8 @@ E- Cronograma Inicial do Projeto divido por Bimestre
         -- correção de erros;
         -- ajustes no funcionamento do sistema
 
+        Requisitos relacionados:
+        -- RF01, RF02, RF03, RF04, RF05 e RF06
 
     -> Entrega 14 — 12/10
         Fechamento da 3º Bimestre
@@ -165,6 +187,9 @@ E- Cronograma Inicial do Projeto divido por Bimestre
 
         -- mensagens simples de erro
 
+        Requisitos relacionados:
+        -- Regra de Negócio: Toda tarefa deve conter título, matéria e prazo
+
 
     -> Entrega 16 — 07/11
         Melhorias de usabilidade
@@ -173,6 +198,8 @@ E- Cronograma Inicial do Projeto divido por Bimestre
         -- mensagens de sucesso;
         -- melhor organização visual
 
+        Requisitos relacionados:
+        -- RNF03: Facilidade de uso
 
     -> Entrega 17 — 20/11
         Ajustes finais
@@ -183,9 +210,20 @@ E- Cronograma Inicial do Projeto divido por Bimestre
         -- inserção de prints do sistema;
         -- organização final do repositório
 
+        Requisitos relacionados:
+        -- revisão final de RF01, RF02, RF03, RF04, RF05 e RF06
+
 
     /// Entrega Final — até 05/12 ///
         Projeto concluído
 
         -- sistema finalizado e funcionando;
         -- versão final disponível no GitHub para avaliação do professor
+
+        Requisitos relacionados:
+        -- RF01: Criar tarefas
+        -- RF02: Listar tarefas
+        -- RF03: Concluir tarefas
+        -- RF04: Remover tarefas
+        -- RF05: Editar tarefas
+        -- RF06: Filtrar tarefas por matéria
