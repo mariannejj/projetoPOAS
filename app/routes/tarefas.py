@@ -113,6 +113,7 @@ def editar_tarefa(
     return {"erro": "não encontrada"}
 
 
+# ----------- ADICIONADO -----------
 @router.delete("/tarefas/{id}")
 def deletar_tarefa(
     id: int,
