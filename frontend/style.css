@@ -1,32 +1,101 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
-  text-align: center;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-.container {
-  background: white;
-  padding: 20px;
-  margin: auto;
-  width: 300px;
-  border-radius: 10px;
+body{
+  font-family:Arial, Helvetica, sans-serif;
+  background:#f4f6f9;
+  display:flex;
+  justify-content:center;
+  padding:40px;
 }
 
-input, button {
-  display: block;
-  width: 100%;
-  margin: 5px 0;
-  padding: 8px;
+.container{
+  width:700px;
+  background:white;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 0 15px rgba(0,0,0,0.1);
 }
 
-button {
-  background: #4CAF50;
-  color: white;
-  border: none;
-  cursor: pointer;
+h1{
+  text-align:center;
+  margin-bottom:20px;
 }
 
-li {
-  text-align: left;
-  margin: 5px 0;
+h2{
+  margin-top:20px;
+  margin-bottom:10px;
+}
+
+form{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+input{
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:6px;
+}
+
+button{
+  padding:10px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+form button{
+  background:#2563eb;
+  color:white;
+}
+
+ul{
+  list-style:none;
+}
+
+li{
+  margin-top:10px;
+  padding:15px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.concluida{
+  background:#dcfce7;
+}
+
+.botoes{
+  display:flex;
+  gap:5px;
+}
+
+.btn-concluir{
+  background:#16a34a;
+  color:white;
+}
+
+.btn-editar{
+  background:#f59e0b;
+  color:white;
+}
+
+.btn-excluir{
+  background:#dc2626;
+  color:white;
+}
+
+.filtro{
+  margin:20px 0;
+}
+
+.filtro input{
+  width:100%;
 }
