@@ -1,10 +1,10 @@
+from datetime import date
 from fastapi import APIRouter, Header
 from pydantic import BaseModel
 from typing import Optional
 from jose import jwt
 
 SECRET_KEY = "estudamais"
-
 router = APIRouter()
 tarefas = []
 
@@ -31,7 +31,7 @@ class Tarefa(BaseModel):
 class EditarTarefa(BaseModel):
     titulo: Optional[str] = None
     materia: Optional[str] = None
-    prazo: Optional[str] = None
+    prazo: Optional[date] = None
 
 
 @router.post("/tarefas")
@@ -113,7 +113,6 @@ def editar_tarefa(
     return {"erro": "não encontrada"}
 
 
-# ----------- ADICIONADO -----------
 @router.delete("/tarefas/{id}")
 def deletar_tarefa(
     id: int,
