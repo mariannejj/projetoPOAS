@@ -8,7 +8,6 @@ const filtroMateria = document.getElementById("filtroMateria");
 
 let tarefasSalvas = [];
 
-// LOGIN AUTOMÁTICO
 async function fazerLogin() {
 
   const resposta = await fetch(`${API}/login`, {
