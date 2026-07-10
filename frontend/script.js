@@ -1,12 +1,13 @@
 const API = "http://127.0.0.1:8000";
 
-let token = "";
+let token = localStorage.getItem("token") || "";
 
 const form = document.getElementById("formTarefa");
 const lista = document.getElementById("listaTarefas");
 const filtroMateria = document.getElementById("filtroMateria");
 
 let tarefasSalvas = [];
+
 
 async function fazerLogin() {
 
@@ -25,16 +26,24 @@ async function fazerLogin() {
 
   token = dados.access_token;
 
+  localStorage.setItem("token", token);
+
   console.log("Login realizado!");
 }
 
-// CARREGAR TAREFAS
+
+function headers() {
+  return {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${token}`
+  };
+}
+
+
 async function carregarTarefas() {
 
   const resposta = await fetch(`${API}/tarefas`, {
-    headers: {
-      Authorization: token
-    }
+    headers: headers()
   });
 
   tarefasSalvas = await resposta.json();
@@ -42,7 +51,7 @@ async function carregarTarefas() {
   mostrarTarefas(tarefasSalvas);
 }
 
-// MOSTRAR TAREFAS
+
 function mostrarTarefas(tarefas) {
 
   lista.innerHTML = "";
@@ -61,32 +70,31 @@ function mostrarTarefas(tarefas) {
         Matéria: ${tarefa.materia}<br>
         Prazo: ${tarefa.prazo}<br>
         Status:
-        ${tarefa.concluida ? "✅ Concluída" : "⏳ Pendente"}
+        ${tarefa.concluida ? "Concluída" : "Pendente"}
       </div>
 
       <div class="botoes">
-        <button class="btn-concluir"
-          onclick="concluirTarefa(${tarefa.id})">
+
+        <button onclick="concluirTarefa(${tarefa.id})">
           Concluir
         </button>
 
-        <button class="btn-editar"
-          onclick="editarTarefa(${tarefa.id})">
+        <button onclick="editarTarefa(${tarefa.id})">
           Editar
         </button>
 
-        <button class="btn-excluir"
-          onclick="excluirTarefa(${tarefa.id})">
+        <button onclick="excluirTarefa(${tarefa.id})">
           Excluir
         </button>
+
       </div>
     `;
 
     lista.appendChild(item);
+
   });
 }
 
-// FILTRO
 filtroMateria.addEventListener("input", () => {
 
   const texto = filtroMateria.value.toLowerCase();
@@ -96,82 +104,68 @@ filtroMateria.addEventListener("input", () => {
   );
 
   mostrarTarefas(filtradas);
+
 });
 
-// ADICIONAR TAREFA
 form.addEventListener("submit", async (e) => {
 
   e.preventDefault();
 
+
   const tarefa = {
+
     titulo: document.getElementById("titulo").value,
+
     materia: document.getElementById("materia").value,
+
     prazo: document.getElementById("prazo").value
+
   };
+
 
   await fetch(`${API}/tarefas`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token
-    },
+    headers: headers(),
     body: JSON.stringify(tarefa)
   });
-
   form.reset();
-
   carregarTarefas();
 });
 
-// EXCLUIR
-async function excluirTarefa(id) {
 
+async function excluirTarefa(id) {
   await fetch(`${API}/tarefas/${id}`, {
     method: "DELETE",
-    headers: {
-      Authorization: token
-    }
+    headers: headers()
   });
-
   carregarTarefas();
 }
 
-// CONCLUIR
 async function concluirTarefa(id) {
-
   await fetch(`${API}/tarefas/${id}`, {
     method: "PUT",
-    headers: {
-      Authorization: token
-    }
+    headers: headers()
   });
-
   carregarTarefas();
 }
 
-// EDITAR
 async function editarTarefa(id) {
-
   const novoTitulo = prompt("Novo título:");
-
   if (!novoTitulo) return;
-
   await fetch(`${API}/tarefas/${id}/editar`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token
-    },
+    headers: headers(),
     body: JSON.stringify({
       titulo: novoTitulo
     })
   });
-
   carregarTarefas();
 }
 
-// INICIAR SISTEMA
 (async () => {
-  await fazerLogin();
+  if (!token) {
+    await fazerLogin();
+  }
   await carregarTarefas();
+
 })();

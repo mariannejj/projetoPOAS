@@ -9,15 +9,14 @@ router = APIRouter()
 tarefas = []
 
 def verificar_token(token: str):
-
     try:
+        token = token.replace("Bearer ", "")
         jwt.decode(
             token,
             SECRET_KEY,
             algorithms=["HS256"]
         )
         return True
-
     except:
         return False
 
@@ -37,7 +36,7 @@ class EditarTarefa(BaseModel):
 @router.post("/tarefas")
 def criar_tarefa(
     tarefa: Tarefa,
-    authorization: str = Header()
+    authorization: str = Header(None)
 ):
 
     if not verificar_token(authorization):
