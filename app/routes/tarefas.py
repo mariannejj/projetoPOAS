@@ -1,52 +1,38 @@
-from datetime import date
-from fastapi import APIRouter, Header
-from pydantic import BaseModel
-from typing import Optional
-from jose import jwt
-
-SECRET_KEY = "estudamais"
-router = APIRouter()
-tarefas = []
-
-def verificar_token(token: str):
-    try:
-        token = token.replace("Bearer ", "")
-        jwt.decode(
-            token,
-            SECRET_KEY,
-            algorithms=["HS256"]
-        )
-        return True
-    except:
-        return False
+from typing import List
+from fastapi import APIRouter, HTTPException, status
+from app.database import tarefas
+from app.schemas import TarefaCriar, TarefaEditar, TarefaResposta
 
 
-class Tarefa(BaseModel):
-    titulo: str
-    materia: str
-    prazo: str
+router = APIRouter(
+    prefix="/tarefas",
+    tags=["Tarefas"]
+)
 
+def buscar_tarefa(id_tarefa: int):
+    for tarefa in tarefas:
+        if tarefa["id"] == id_tarefa:
+            return tarefa
 
-class EditarTarefa(BaseModel):
-    titulo: Optional[str] = None
-    materia: Optional[str] = None
-    prazo: Optional[date] = None
+    return None
 
+def gerar_novo_id():
+    if not tarefas:
+        return 1
 
-@router.post("/tarefas")
-def criar_tarefa(
-    tarefa: Tarefa,
-    authorization: str = Header(None)
-):
+    return max(tarefa["id"] for tarefa in tarefas) + 1
 
-    if not verificar_token(authorization):
-        return {"erro": "acesso negado"}
-
+@router.post(
+    "",
+    response_model=TarefaResposta,
+    status_code=status.HTTP_201_CREATED
+)
+def criar_tarefa(dados: TarefaCriar):
     nova_tarefa = {
-        "id": len(tarefas) + 1,
-        "titulo": tarefa.titulo,
-        "materia": tarefa.materia,
-        "prazo": tarefa.prazo,
+        "id": gerar_novo_id(),
+        "titulo": dados.titulo,
+        "materia": dados.materia,
+        "prazo": dados.prazo,
         "concluida": False
     }
 
@@ -54,77 +40,61 @@ def criar_tarefa(
 
     return nova_tarefa
 
-
-@router.get("/tarefas")
-def listar_tarefas(
-    authorization: str = Header()
-):
-
-    if not verificar_token(authorization):
-        return {"erro": "acesso negado"}
-
+@router.get(
+    "",
+    response_model=List[TarefaResposta]
+)
+def listar_tarefas():
     return tarefas
 
+@router.put(
+    "/{id_tarefa}/concluir",
+    response_model=TarefaResposta
+)
+def concluir_tarefa(id_tarefa: int):
+    tarefa = buscar_tarefa(id_tarefa)
 
-@router.put("/tarefas/{id}")
-def concluir_tarefa(
-    id: int,
-    authorization: str = Header()
-):
+    if tarefa is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Tarefa não encontrada"
+        )
 
-    if not verificar_token(authorization):
-        return {"erro": "acesso negado"}
+    tarefa["concluida"] = True
 
-    for tarefa in tarefas:
+    return tarefa
 
-        if tarefa["id"] == id:
-            tarefa["concluida"] = True
-            return tarefa
+@router.put(
+    "/{id_tarefa}",
+    response_model=TarefaResposta
+)
+def editar_tarefa(id_tarefa: int, dados: TarefaEditar):
+    tarefa = buscar_tarefa(id_tarefa)
 
-    return {"erro": "não encontrada"}
+    if tarefa is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Tarefa não encontrada"
+        )
 
+    dados_atualizados = dados.model_dump(exclude_unset=True)
 
-@router.put("/tarefas/{id}/editar")
-def editar_tarefa(
-    id: int,
-    dados: EditarTarefa,
-    authorization: str = Header()
-):
+    for campo, valor in dados_atualizados.items():
+        tarefa[campo] = valor
 
-    if not verificar_token(authorization):
-        return {"erro": "acesso negado"}
+    return tarefa
 
-    for tarefa in tarefas:
+@router.delete(
+    "/{id_tarefa}",
+    status_code=status.HTTP_204_NO_CONTENT
+    )
+def excluir_tarefa(id_tarefa: int):
+    tarefa = buscar_tarefa(id_tarefa)
 
-        if tarefa["id"] == id:
-
-            if dados.titulo is not None:
-                tarefa["titulo"] = dados.titulo
-
-            if dados.materia is not None:
-                tarefa["materia"] = dados.materia
-
-            if dados.prazo is not None:
-                tarefa["prazo"] = dados.prazo
-
-            return tarefa
-
-    return {"erro": "não encontrada"}
-
-
-@router.delete("/tarefas/{id}")
-def deletar_tarefa(
-    id: int,
-    authorization: str = Header()
-):
-
-    if not verificar_token(authorization):
-        return {"erro": "acesso negado"}
-
-    for tarefa in tarefas:
-
-        if tarefa["id"] == id:
-            tarefas.remove(tarefa)
-            return {"msg": "removida"}
-
-    return {"erro": "não encontrada"}
+    if tarefa is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Tarefa não encontrada"
+        )
+    tarefas.remove(tarefa)
+    return None
