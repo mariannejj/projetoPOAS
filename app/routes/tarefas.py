@@ -60,7 +60,7 @@ def concluir_tarefa(id_tarefa: int):
             detail="Tarefa não encontrada"
         )
 
-    tarefa["concluida"] = True
+    tarefa["concluida"] = not tarefa["concluida"]
 
     return tarefa
 

@@ -20,3 +20,6 @@ class TarefaResposta(BaseModel):
     prazo: date
     concluida: bool
     model_config = ConfigDict(from_attributes=True)
+
+class TarefaStatus(BaseModel):
+    concluida: bool
