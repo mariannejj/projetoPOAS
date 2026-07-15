@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { useRouter } from "next/navigation";
 import Formulario from "../components/Formulario";
 import ListaTarefas from "../components/ListaTarefas";
 
@@ -14,6 +14,9 @@ import {
 } from "../services/api";
 
 export default function Home() {
+  const router = useRouter();
+  const [nomeUsuario, setNomeUsuario] = useState("");
+
   const [titulo, setTitulo] = useState("");
   const [materia, setMateria] = useState("");
   const [prazo, setPrazo] = useState("");
@@ -140,8 +143,21 @@ export default function Home() {
   }
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      router.push("/login");
+      return;
+    }
+
+    const nome = localStorage.getItem("nome");
+
+    if (nome) {
+      setNomeUsuario(nome);
+    }
+
     listarTarefas();
-  }, []);
+  }, [router]);
 
   const materias = [
     ...new Set(tarefas.map((tarefa) => tarefa.materia)),
@@ -158,13 +174,27 @@ export default function Home() {
 
     return correspondeMateria && correspondeStatus;
   });
+  
+  function sair() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("nome");
 
+    router.push("/login");
+  }
   return (
     <main className="pagina">
       <header className="cabecalho">
         <div>
           <h1>Estuda+</h1>
           <p>Organize suas tarefas escolares</p>
+        </div>
+
+        <div className="usuario-logado">
+          <span>Olá, {nomeUsuario}</span>
+
+          <button type="button" onClick={sair}>
+            Sair
+          </button>
         </div>
       </header>
 

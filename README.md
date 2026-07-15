@@ -1,3 +1,13 @@
+COMO RODAR: 
+Backend
+// cd projetoPOAS
+// python -m uvicorn app.main:app --reload
+
+// Frontend
+// cd frontend
+// npm install (apenas na primeira vez)
+// npm run dev
+
 a- Nome do Projeto
     Estuda+
 

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --fundo: #f7f5fb;
+  --fundo: #ffffff;
   --branco: #ffffff;
   --texto: #2e2e53;
   --texto-claro: #545472;
@@ -317,5 +317,43 @@ form > button + button {
   .acoes {
     grid-column: 2;
     flex-wrap: wrap;
+  }
+}
+
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.usuario-logado {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.usuario-logado span {
+  color: var(--texto-claro);
+  font-weight: bold;
+}
+
+.usuario-logado button {
+  padding: 9px 15px;
+  border: none;
+  border-radius: 9px;
+  background: var(--roxo);
+  color: white;
+  font-weight: bold;
+}
+
+.usuario-logado button:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 600px) {
+  .cabecalho {
+    align-items: flex-start;
+    gap: 18px;
+    flex-direction: column;
   }
 }
