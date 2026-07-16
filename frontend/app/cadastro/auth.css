@@ -1,0 +1,109 @@
+body {
+  background: linear-gradient(135deg, #f7f5fb, #ece9fa);
+}
+
+.pagina-login,
+.pagina-cadastro {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.caixa-login,
+.caixa-cadastro {
+  width: 100%;
+  max-width: 420px;
+  padding: 40px;
+  border-radius: 22px;
+  background: white;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+.caixa-login h1,
+.caixa-cadastro h1 {
+  margin-bottom: 10px;
+  color: #8f86c7;
+  font-size: 38px;
+  text-align: center;
+}
+
+.caixa-login h2,
+.caixa-cadastro h2 {
+  margin-bottom: 30px;
+  text-align: center;
+  color: #545472;
+  font-size: 22px;
+}
+
+.caixa-login form,
+.caixa-cadastro form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.caixa-login input,
+.caixa-cadastro input {
+  padding: 14px;
+  border: 1px solid #e5e2ec;
+  border-radius: 12px;
+  outline: none;
+  font-size: 15px;
+  transition: .2s;
+}
+
+.caixa-login input:focus,
+.caixa-cadastro input:focus {
+  border-color: #8f86c7;
+}
+
+.caixa-login button,
+.caixa-cadastro button {
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: #8f86c7;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  transition: .2s;
+}
+
+.caixa-login button:hover,
+.caixa-cadastro button:hover {
+  background: #766db1;
+}
+
+.caixa-login p,
+.caixa-cadastro p {
+  margin-top: 18px;
+  text-align: center;
+  color: #545472;
+}
+
+.caixa-login button[type="button"],
+.caixa-cadastro button[type="button"] {
+  margin-top: 15px;
+  background: transparent;
+  color: #8f86c7;
+  border: 1px solid #8f86c7;
+}
+
+.caixa-login button[type="button"]:hover,
+.caixa-cadastro button[type="button"]:hover {
+  background: #ece9fa;
+}
+
+@media (max-width: 500px) {
+  .caixa-login,
+  .caixa-cadastro {
+    padding: 30px 25px;
+  }
+
+  .caixa-login h1,
+  .caixa-cadastro h1 {
+    font-size: 32px;
+  }
+}
