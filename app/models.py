@@ -1,9 +1,10 @@
-from datetime import date
-from pydantic import BaseModel
+from sqlmodel import SQLModel, Field
+from typing import Optional
 
-class Tarefa(BaseModel):
-    id: int
+
+class Tarefa(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
     titulo: str
     materia: str
-    prazo: date
+    prazo: str
     concluida: bool = False
