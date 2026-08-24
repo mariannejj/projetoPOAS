@@ -38,6 +38,20 @@ RF06 - Filtrar tarefas por materia
 O sistema deve permitir que o usuario filtre as tarefas cadastradas de acordo com a materia. 
 Ao selecionar uma materia, o sistema deve apresentar as tarefas relacionadas a ela. Esse recurso deve facilitar a organizacao e a visualizacao das atividades escolares.
 
+RF07 - Cadastrar usuário
+
+O sistema deve permitir que o usuário realize seu cadastro para criar uma conta de acesso. Para realizar o cadastro, o usuário deve informar os dados solicitados pelo sistema, incluindo nome, e-mail e senha. O sistema deve validar o preenchimento dos campos obrigatórios e, após o cadastro ser realizado com sucesso, os dados do usuário devem ser armazenados para permitir seu acesso ao sistema.
+
+
+RF08 - Realizar login
+
+O sistema deve permitir que o usuário realize login em sua conta por meio de e-mail e senha. Ao enviar os dados de acesso, o sistema deve verificar se as credenciais informadas são válidas. Caso os dados estejam corretos, o sistema deve permitir o acesso às funcionalidades do sistema. Caso contrário, o sistema deve informar que as credenciais são inválidas e não permitir o acesso.
+
+
+RF09 - Acessar as telas de cadastro e login
+
+O sistema deve permitir que o usuário, a partir da tela inicial de boas-vindas, escolha entre realizar o cadastro ou acessar uma conta existente. Para isso, a tela deve disponibilizar opções de navegação para a tela de cadastro e para a tela de login, direcionando o usuário para a funcionalidade selecionada.
+
 
 2. Requisitos Nao Funcionais
 
