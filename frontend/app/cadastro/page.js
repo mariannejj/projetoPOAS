@@ -35,9 +35,14 @@ export default function Cadastro() {
       const dados = await resposta.json();
 
       if (!resposta.ok) {
-        setMensagem(dados.detail || "Não foi possível cadastrar.");
-        return;
-      }
+  const erro =
+    Array.isArray(dados.detail)
+      ? dados.detail.map((item) => item.msg).join(", ")
+      : dados.detail;
+
+  setMensagem(erro || "Não foi possível cadastrar.");
+  return;
+}
 
       setMensagem("Cadastro realizado com sucesso.");
 
@@ -95,3 +100,4 @@ export default function Cadastro() {
     </main>
   );
 }
+

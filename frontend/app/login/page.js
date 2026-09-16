@@ -33,7 +33,7 @@ export default function Login() {
       const dados = await resposta.json();
 
       if (!resposta.ok) {
-        setMensagem(dados.detail || "Não foi possível entrar.");
+        setMensagem("E-mail ou senha incorretos.");
         return;
       }
 
@@ -50,7 +50,7 @@ export default function Login() {
     <main className="pagina-login">
       <div className="caixa-login">
         <h1>Estuda+</h1>
-        <h2>Entrar</h2>
+        <h2>Entrar na sua conta</h2>
 
         <form onSubmit={entrar}>
           <input
@@ -72,7 +72,9 @@ export default function Login() {
           <button type="submit">Entrar</button>
         </form>
 
-        {mensagem && <p>{mensagem}</p>}
+        {mensagem && (
+          <p className="mensagem-erro">{mensagem}</p>
+        )}
 
         <button
           type="button"

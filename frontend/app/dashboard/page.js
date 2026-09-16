@@ -6,12 +6,12 @@ import Formulario from "../components/Formulario";
 import ListaTarefas from "../components/ListaTarefas";
 
 import {
-  buscarTarefas,
-  criarTarefa,
-  editarTarefa,
-  excluirTarefa,
-  concluirTarefa,
-} from "../services/api";
+  listarTarefas,
+  cadastrarTarefa,
+  atualizarTarefa,
+  removerTarefa,
+  alterarStatusTarefa,
+} from "../services/tarefasService";
 
 export default function Home() {
   const router = useRouter();
@@ -33,7 +33,7 @@ export default function Home() {
 
   async function listarTarefas() {
     try {
-      const dados = await buscarTarefas();
+      const dados = await listarTarefas();
       setTarefas(dados);
     } catch {
       setErro("Não foi possível carregar as tarefas.");
@@ -66,10 +66,10 @@ export default function Home() {
 
     try {
       if (idEdicao !== null) {
-        await editarTarefa(idEdicao, dadosTarefa);
+        await atualizarTarefa(idEdicao, dadosTarefa);
         setMensagem("Tarefa editada com sucesso.");
       } else {
-        await criarTarefa(dadosTarefa);
+        await cadastrarTarefa(dadosTarefa);
         setMensagem("Tarefa cadastrada com sucesso.");
       }
 
@@ -111,7 +111,7 @@ export default function Home() {
     }
 
     try {
-      await excluirTarefa(id);
+      await removerTarefa(id);
       setMensagem("Tarefa excluída com sucesso.");
       setErro("");
 
@@ -127,7 +127,7 @@ export default function Home() {
 
   async function marcarComoConcluida(id, concluidaAtual) {
     try {
-      await concluirTarefa(id, !concluidaAtual);
+      await alterarStatusTarefa(id, !concluidaAtual);
 
       setMensagem(
         concluidaAtual
