@@ -69,7 +69,11 @@ export default function Login() {
             required
           />
 
-          <button type="submit">Entrar</button>
+          <button 
+            type="button"
+            onClick={() => router.push("/dashboard")}>
+              Entrar
+              </button>
         </form>
 
         {mensagem && (

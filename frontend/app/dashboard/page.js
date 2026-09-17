@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Formulario from "../components/Formulario";
-import ListaTarefas from "../components/ListaTarefas";
+import Formulario from "../../components/Formulario";
+import ListaTarefas from "../../components/ListaTarefas";
 
 import {
   listarTarefas,
@@ -11,10 +11,11 @@ import {
   atualizarTarefa,
   removerTarefa,
   alterarStatusTarefa,
-} from "../services/tarefasService";
+} from "../../services/tarefasService";
 
 export default function Home() {
   const router = useRouter();
+
   const [nomeUsuario, setNomeUsuario] = useState("");
 
   const [titulo, setTitulo] = useState("");
@@ -31,7 +32,7 @@ export default function Home() {
   const [mensagem, setMensagem] = useState("");
   const [erro, setErro] = useState("");
 
-  async function listarTarefas() {
+  async function carregarTarefas() {
     try {
       const dados = await listarTarefas();
       setTarefas(dados);
@@ -74,7 +75,7 @@ export default function Home() {
       }
 
       limparFormulario();
-      listarTarefas();
+      carregarTarefas();
     } catch {
       setErro("Não foi possível salvar a tarefa.");
     }
@@ -101,7 +102,7 @@ export default function Home() {
     setErro("");
   }
 
-  async function removerTarefa(id) {
+  async function excluirTarefa(id) {
     const confirmou = window.confirm(
       "Tem certeza que deseja excluir esta tarefa?"
     );
@@ -112,6 +113,7 @@ export default function Home() {
 
     try {
       await removerTarefa(id);
+
       setMensagem("Tarefa excluída com sucesso.");
       setErro("");
 
@@ -119,7 +121,7 @@ export default function Home() {
         limparFormulario();
       }
 
-      listarTarefas();
+      carregarTarefas();
     } catch {
       setErro("Não foi possível excluir a tarefa.");
     }
@@ -136,7 +138,8 @@ export default function Home() {
       );
 
       setErro("");
-      listarTarefas();
+
+      carregarTarefas();
     } catch {
       setErro("Não foi possível alterar o status da tarefa.");
     }
@@ -156,7 +159,7 @@ export default function Home() {
       setNomeUsuario(nome);
     }
 
-    listarTarefas();
+    carregarTarefas();
   }, [router]);
 
   const materias = [
@@ -174,13 +177,14 @@ export default function Home() {
 
     return correspondeMateria && correspondeStatus;
   });
-  
+
   function sair() {
     localStorage.removeItem("token");
     localStorage.removeItem("nome");
 
     router.push("/login");
   }
+
   return (
     <main className="pagina">
       <header className="cabecalho">
@@ -199,13 +203,17 @@ export default function Home() {
       </header>
 
       <section className="apresentacao">
-        <span className="etiqueta">Organização de estudos</span>
+        <span className="etiqueta">
+          Organização de estudos
+        </span>
 
-        <h2>Tenha mais controle sobre suas atividades.</h2>
+        <h2>
+          Tenha mais controle sobre suas atividades.
+        </h2>
 
         <p>
-          Cadastre tarefas, acompanhe os prazos e marque as atividades
-          concluídas.
+          Cadastre tarefas, acompanhe os prazos e marque as
+          atividades concluídas.
         </p>
       </section>
 
@@ -243,7 +251,7 @@ export default function Home() {
           filtroStatus={filtroStatus}
           setFiltroStatus={setFiltroStatus}
           iniciarEdicao={iniciarEdicao}
-          removerTarefa={removerTarefa}
+          removerTarefa={excluirTarefa}
           marcarComoConcluida={marcarComoConcluida}
         />
       </section>
