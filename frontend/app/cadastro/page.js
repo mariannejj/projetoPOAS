@@ -17,7 +17,6 @@ export default function Cadastro() {
     setMensagem("");
 
     try {
-      // 1. FAZ O CADASTRO
       const resposta = await fetch(
         "http://127.0.0.1:8000/auth/cadastro",
         {
@@ -35,7 +34,6 @@ export default function Cadastro() {
 
       const dados = await resposta.json();
 
-      // Se o cadastro der erro
       if (!resposta.ok) {
         const erro = Array.isArray(dados.detail)
           ? dados.detail.map((item) => item.msg).join(", ")
@@ -45,7 +43,6 @@ export default function Cadastro() {
         return;
       }
 
-      // 2. FAZ LOGIN AUTOMATICAMENTE
       const respostaLogin = await fetch(
         "http://127.0.0.1:8000/auth/login",
         {
@@ -62,7 +59,6 @@ export default function Cadastro() {
 
       const dadosLogin = await respostaLogin.json();
 
-      // Se o login der erro
       if (!respostaLogin.ok) {
         setMensagem(
           "Cadastro realizado, mas não foi possível entrar automaticamente."
@@ -70,13 +66,11 @@ export default function Cadastro() {
         return;
       }
 
-      // 3. SALVA O TOKEN
       localStorage.setItem(
         "token",
         dadosLogin.access_token
       );
 
-      // 4. SALVA O NOME
       localStorage.setItem(
         "nome",
         dadosLogin.nome
@@ -84,7 +78,6 @@ export default function Cadastro() {
 
       setMensagem("Cadastro realizado com sucesso!");
 
-      // 5. VAI PARA O DASHBOARD
       router.push("/dashboard");
 
     } catch {

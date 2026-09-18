@@ -40,7 +40,7 @@ export default function Login() {
       localStorage.setItem("token", dados.access_token);
       localStorage.setItem("nome", dados.nome);
 
-      router.push("/");
+      router.push("/dashboard");
     } catch {
       setMensagem("Não foi possível conectar ao servidor.");
     }
@@ -50,6 +50,7 @@ export default function Login() {
     <main className="pagina-login">
       <div className="caixa-login">
         <h1>Estuda+</h1>
+
         <h2>Entrar na sua conta</h2>
 
         <form onSubmit={entrar}>
@@ -69,15 +70,15 @@ export default function Login() {
             required
           />
 
-          <button 
-            type="button"
-            onClick={() => router.push("/dashboard")}>
-              Entrar
-              </button>
+          <button type="submit">
+            Entrar
+          </button>
         </form>
 
         {mensagem && (
-          <p className="mensagem-erro">{mensagem}</p>
+          <p className="mensagem-erro">
+            {mensagem}
+          </p>
         )}
 
         <button
