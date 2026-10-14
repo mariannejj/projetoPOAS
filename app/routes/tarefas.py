@@ -1,11 +1,13 @@
+
 from typing import List
 
 from fastapi import APIRouter, HTTPException, status, Depends
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.models import Tarefa
+from app.models import Tarefa, Usuario
 from app.schemas import TarefaCriar, TarefaEditar, TarefaResposta
+from app.dependencies import get_usuario_logado
 
 
 router = APIRouter(
@@ -21,13 +23,15 @@ router = APIRouter(
 )
 def criar_tarefa(
     dados: TarefaCriar,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    usuario: Usuario = Depends(get_usuario_logado)
 ):
     nova_tarefa = Tarefa(
         titulo=dados.titulo,
         materia=dados.materia,
         prazo=dados.prazo,
-        concluida=False
+        concluida=False,
+        usuario_id=usuario.id
     )
 
     db.add(nova_tarefa)
@@ -42,9 +46,12 @@ def criar_tarefa(
     response_model=List[TarefaResposta]
 )
 def listar_tarefas(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    usuario: Usuario = Depends(get_usuario_logado)
 ):
-    return db.query(Tarefa).all()
+    return db.query(Tarefa).filter(
+        Tarefa.usuario_id == usuario.id
+    ).all()
 
 
 @router.put(
@@ -53,10 +60,12 @@ def listar_tarefas(
 )
 def concluir_tarefa(
     id_tarefa: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    usuario: Usuario = Depends(get_usuario_logado)
 ):
     tarefa = db.query(Tarefa).filter(
-        Tarefa.id == id_tarefa
+        Tarefa.id == id_tarefa,
+        Tarefa.usuario_id == usuario.id
     ).first()
 
     if tarefa is None:
@@ -80,10 +89,12 @@ def concluir_tarefa(
 def editar_tarefa(
     id_tarefa: int,
     dados: TarefaEditar,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    usuario: Usuario = Depends(get_usuario_logado)
 ):
     tarefa = db.query(Tarefa).filter(
-        Tarefa.id == id_tarefa
+        Tarefa.id == id_tarefa,
+        Tarefa.usuario_id == usuario.id
     ).first()
 
     if tarefa is None:
@@ -111,10 +122,12 @@ def editar_tarefa(
 )
 def excluir_tarefa(
     id_tarefa: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    usuario: Usuario = Depends(get_usuario_logado)
 ):
     tarefa = db.query(Tarefa).filter(
-        Tarefa.id == id_tarefa
+        Tarefa.id == id_tarefa,
+        Tarefa.usuario_id == usuario.id
     ).first()
 
     if tarefa is None:

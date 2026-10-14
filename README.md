@@ -13,6 +13,7 @@ a- Nome do Projeto
 
 b- Equipe
     Evelyn Ester, Kessya Cauanny, Lívia Vitória e Marianne Júlia
+    
 
 C- Descrição do Tema
     O Estuda+ é um sistema simples que foi criado para ajudar os estudantes a organizarem melhor suas atividades do dia a dia. Nele é possível cadastrar tarefas, informar a matéria, colocar um prazo e marcar quando a atividade já foi concluída. Também dá para visualizar todas as tarefas cadastradas, além de editar ou excluir quando for necessário. A ideia do projeto é facilitar a organização dos estudos e ajudar o aluno a não esquecer suas tarefas escolares, mantendo tudo mais organizado.

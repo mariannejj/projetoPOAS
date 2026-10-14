@@ -32,14 +32,30 @@ export default function Home() {
   const [mensagem, setMensagem] = useState("");
   const [erro, setErro] = useState("");
 
-  async function carregarTarefas() {
-    try {
-      const dados = await listarTarefas();
-      setTarefas(dados);
-    } catch {
-      setErro("Não foi possível carregar as tarefas.");
+
+async function carregarTarefas() {
+  setErro("");
+
+  try {
+    const dados = await listarTarefas();
+    setTarefas(Array.isArray(dados) ? dados : []);
+  } catch (erro) {
+    setTarefas([]);
+
+    if (
+      erro?.message?.includes("401") ||
+      erro?.message?.toLowerCase().includes("autenticação")
+    ) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("nome");
+      router.push("/login");
+      return;
     }
+
+    setErro("Não foi possível carregar as tarefas. Verifique sua conexão.");
   }
+}
+
 
   function limparFormulario() {
     setTitulo("");

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from app.database import Base
 
 
@@ -19,3 +19,9 @@ class Tarefa(Base):
     materia = Column(String, nullable=False)
     prazo = Column(String, nullable=False)
     concluida = Column(Boolean, default=False)
+
+    usuario_id = Column(
+        Integer,
+        ForeignKey("usuarios.id"),
+        nullable=True
+    )
