@@ -51,10 +51,8 @@ async function carregarTarefas() {
       router.push("/login");
       return;
     }
-
-    setErro("Não foi possível carregar as tarefas. Verifique sua conexão.");
   }
-}
+}     
 
 
   function limparFormulario() {

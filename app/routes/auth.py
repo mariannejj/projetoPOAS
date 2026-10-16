@@ -13,10 +13,8 @@ router = APIRouter(
     tags=["Autenticação"]
 )
 
-
 SECRET_KEY = "estudamais"
 ALGORITHM = "HS256"
-
 
 class UsuarioCadastro(BaseModel):
     nome: str

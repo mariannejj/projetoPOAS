@@ -16,6 +16,11 @@ export default function Cadastro() {
     evento.preventDefault();
     setMensagem("");
 
+    if (!email.includes("@") || !email.includes(".")) {
+      setMensagem("Digite um e-mail válido.");
+      return;
+    }
+
     try {
       const resposta = await fetch(
         "http://127.0.0.1:8000/auth/cadastro",
@@ -94,7 +99,7 @@ export default function Cadastro() {
 
         <h2>Criar conta</h2>
 
-        <form onSubmit={cadastrar}>
+        <form onSubmit={cadastrar} noValidate>
           <input
             type="text"
             placeholder="Nome"
